@@ -1,0 +1,80 @@
+{
+  "report_version": "1.0",
+  "candidate_label": "Candidate B",
+  "review_date": "2026-09-02",
+  "reviewed_inputs": ["Resume", "Portfolio", "Repository history", "Employer product page"],
+  "overall_conclusion": "Human review recommended",
+  "summary": "The evidence supports one technical claim, leaves one impact claim unresolved, and materially conflicts with the stated sole authorship of a linked project.",
+  "claims": [
+    {
+      "id": "C1",
+      "category": "Technology",
+      "claim": "Used React and Node.js on the inventory application.",
+      "assessment": "Supported",
+      "confidence": "High",
+      "observations": ["The linked repository contains React client code and a Node.js service."],
+      "inference": "The technical stack in the artifact agrees with the claim.",
+      "evidence": [
+        {
+          "source": "Repository dependency manifests",
+          "finding": "React and Node.js dependencies are present.",
+          "url": "https://example.com/repository"
+        }
+      ],
+      "alternative_explanations": [],
+      "follow_up_questions": [],
+      "next_step": "Use ordinary technical interviewing if this experience is job-relevant."
+    },
+    {
+      "id": "C2",
+      "category": "Quantified impact",
+      "claim": "The migration reduced processing time by 70 percent.",
+      "assessment": "Needs clarification",
+      "confidence": "Medium",
+      "observations": ["The product launch is documented, but no baseline or measurement method is supplied."],
+      "inference": "The improvement may be genuine, but its magnitude and attribution are not independently supported.",
+      "evidence": [
+        {
+          "source": "Employer product page",
+          "finding": "A migration occurred during the stated period.",
+          "url": "https://example.com/product-release"
+        }
+      ],
+      "alternative_explanations": ["The metric may come from an internal dashboard that is not public."],
+      "follow_up_questions": ["What was the baseline, measurement window, and data source for the 70 percent figure?"],
+      "next_step": "Ask for the measurement method and the candidate's specific contribution."
+    },
+    {
+      "id": "C3",
+      "category": "Project authorship",
+      "claim": "Created the linked inventory application.",
+      "assessment": "Material inconsistency",
+      "confidence": "High",
+      "observations": ["The repository predates the stated work and another account authored the original implementation."],
+      "inference": "The available history supports later contribution but conflicts with sole creation of the linked repository.",
+      "evidence": [
+        {
+          "source": "Repository commit history",
+          "finding": "Another account created the repository and authored the initial implementation.",
+          "url": "https://example.com/repository/commits"
+        }
+      ],
+      "alternative_explanations": ["The project may have been migrated from a private repository or developed under another confirmed account."],
+      "follow_up_questions": ["Which components did you personally create, and was earlier work migrated from another repository?"],
+      "next_step": "Have the candidate walk through a representative contribution and explain the repository history."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Candidate-provided repository",
+      "url": "https://example.com/repository",
+      "accessed": "2026-09-02"
+    },
+    {
+      "label": "Employer product page",
+      "url": "https://example.com/product-release",
+      "accessed": "2026-09-02"
+    }
+  ],
+  "limitations": ["The review did not include private employer records or reference checks."]
+}
