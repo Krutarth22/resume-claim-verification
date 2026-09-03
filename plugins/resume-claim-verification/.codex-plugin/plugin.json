@@ -1,0 +1,32 @@
+{
+  "name": "resume-claim-verification",
+  "version": "0.1.0",
+  "description": "Review resume claims against available evidence and create a neutral, beginner-friendly PDF report for human review.",
+  "author": {
+    "name": "Krutarth22",
+    "url": "https://github.com/Krutarth22"
+  },
+  "homepage": "https://github.com/Krutarth22/resume-claim-verification#readme",
+  "repository": "https://github.com/Krutarth22/resume-claim-verification",
+  "keywords": ["resume", "verification", "recruiting", "due-diligence", "pdf-report"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Resume Claim Verification",
+    "shortDescription": "Evidence-based resume review without binary verdicts",
+    "longDescription": "Review employment, education, project, authorship, technology, responsibility, and impact claims. Produce a cited PDF with clear percentages, alternative explanations, and focused follow-up questions for a human reviewer.",
+    "developerName": "Krutarth22",
+    "category": "Productivity",
+    "capabilities": ["Interactive", "Analysis", "Write"],
+    "websiteURL": "https://github.com/Krutarth22/resume-claim-verification",
+    "defaultPrompt": [
+      "Review this resume claim by claim and create a PDF report.",
+      "Check this resume and its supplied portfolio links.",
+      "Turn these resume claims into focused interview questions."
+    ],
+    "brandColor": "#16324F",
+    "composerIcon": "./assets/logo.svg",
+    "logo": "./assets/logo.svg",
+    "logoDark": "./assets/logo-dark.svg",
+    "screenshots": ["./assets/report-preview.png"]
+  }
+}

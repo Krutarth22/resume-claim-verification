@@ -1,6 +1,6 @@
-__pycache__/
+**/__pycache__/
 *.pyc
-.pytest_cache/
-tmp/
-output/pdf/*
-!output/pdf/sample-resume-claim-verification-report.pdf
+**/.pytest_cache/
+**/tmp/
+**/output/pdf/*
+!plugins/resume-claim-verification/skills/resume-claim-verification/output/pdf/sample-resume-claim-verification-report.pdf

@@ -1,0 +1,20 @@
+{
+  "name": "krutarth22",
+  "interface": {
+    "displayName": "Krutarth22 Plugins"
+  },
+  "plugins": [
+    {
+      "name": "resume-claim-verification",
+      "source": {
+        "source": "local",
+        "path": "./plugins/resume-claim-verification"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
