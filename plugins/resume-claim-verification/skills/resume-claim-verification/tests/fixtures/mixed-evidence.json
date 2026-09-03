@@ -4,7 +4,7 @@
   "review_date": "2026-09-02",
   "reviewed_inputs": ["Resume", "Portfolio", "Repository history", "Employer product page"],
   "overall_conclusion": "Human review recommended",
-  "summary": "The evidence supports one technical claim, leaves one impact claim unresolved, and materially conflicts with the stated sole authorship of a linked project.",
+  "summary": "One claim matches the available evidence. One needs an explanation. One important detail does not match the repository history.",
   "claims": [
     {
       "id": "C1",
@@ -13,7 +13,7 @@
       "assessment": "Supported",
       "confidence": "High",
       "observations": ["The linked repository contains React client code and a Node.js service."],
-      "inference": "The technical stack in the artifact agrees with the claim.",
+      "inference": "The technology used in the linked project matches the claim.",
       "evidence": [
         {
           "source": "Repository dependency manifests",
@@ -23,16 +23,16 @@
       ],
       "alternative_explanations": [],
       "follow_up_questions": [],
-      "next_step": "Use ordinary technical interviewing if this experience is job-relevant."
+      "next_step": "Ask normal technical questions if this experience matters for the job."
     },
     {
       "id": "C2",
-      "category": "Quantified impact",
+      "category": "Claimed result",
       "claim": "The migration reduced processing time by 70 percent.",
       "assessment": "Needs clarification",
       "confidence": "Medium",
-      "observations": ["The product launch is documented, but no baseline or measurement method is supplied."],
-      "inference": "The improvement may be genuine, but its magnitude and attribution are not independently supported.",
+      "observations": ["The product launch is documented, but the starting point and calculation for the 70 percent figure were not provided."],
+      "inference": "The improvement may be real, but the available information does not show how the 70 percent figure was measured or how much of the result came from the candidate's work.",
       "evidence": [
         {
           "source": "Employer product page",
@@ -41,26 +41,26 @@
         }
       ],
       "alternative_explanations": ["The metric may come from an internal dashboard that is not public."],
-      "follow_up_questions": ["What was the baseline, measurement window, and data source for the 70 percent figure?"],
-      "next_step": "Ask for the measurement method and the candidate's specific contribution."
+      "follow_up_questions": ["What did you compare, what time period did you measure, and where did the numbers come from?"],
+      "next_step": "Ask how the number was calculated and what work the candidate personally did."
     },
     {
       "id": "C3",
-      "category": "Project authorship",
+      "category": "Project ownership",
       "claim": "Created the linked inventory application.",
       "assessment": "Material inconsistency",
       "confidence": "High",
-      "observations": ["The repository predates the stated work and another account authored the original implementation."],
-      "inference": "The available history supports later contribution but conflicts with sole creation of the linked repository.",
+      "observations": ["The repository existed before the claimed work began, and a different account created the first version."],
+      "inference": "The history shows later contributions from the candidate, but it does not support the claim that the candidate created the project alone.",
       "evidence": [
         {
           "source": "Repository commit history",
-          "finding": "Another account created the repository and authored the initial implementation.",
+          "finding": "A different account created the repository and its first version.",
           "url": "https://example.com/repository/commits"
         }
       ],
-      "alternative_explanations": ["The project may have been migrated from a private repository or developed under another confirmed account."],
-      "follow_up_questions": ["Which components did you personally create, and was earlier work migrated from another repository?"],
+      "alternative_explanations": ["The project may have been moved from a private repository or created under another account that belongs to the candidate."],
+      "follow_up_questions": ["Which parts did you personally create, and was earlier work moved from another repository?"],
       "next_step": "Have the candidate walk through a representative contribution and explain the repository history."
     }
   ],

@@ -2,13 +2,15 @@
 
 ## Claim assessments
 
-| Assessment | Use when | Do not use when |
-|---|---|---|
-| Supported | Credible evidence agrees with the material parts of the claim. | Evidence establishes only that a company, project, or credential exists. |
-| Plausible but unverified | The claim is coherent and nothing material conflicts, but independent support is unavailable or incomplete. | There is direct contradictory evidence. |
-| Needs clarification | The wording, scope, ownership, dates, or metrics are ambiguous or weakly supported and a focused question could resolve it. | The only concern is missing online presence. |
-| Material inconsistency | Credible evidence directly conflicts with a job-relevant, material part of the claim. | The difference is harmless rounding, naming variation, stale profile data, or uncertain identity matching. |
-| Not assessable | The source is inaccessible, confidential, too ambiguous, or cannot be reliably linked to the candidate. | Available evidence is enough for another assessment. |
+| Internal assessment | Plain PDF label | Use when | Do not use when |
+|---|---|---|---|
+| Supported | Matches the evidence | Credible evidence agrees with the material parts of the claim. | Evidence establishes only that a company, project, or credential exists. |
+| Plausible but unverified | Not enough evidence | The claim is coherent and nothing material conflicts, but independent support is unavailable or incomplete. | There is direct contradictory evidence, or no meaningful check was possible at all. |
+| Needs clarification | Needs an explanation | The wording, scope, ownership, dates, or metrics are ambiguous or weakly supported and a focused question could resolve it. | The only concern is missing online presence. |
+| Material inconsistency | Important details don't match | Credible evidence directly conflicts with a job-relevant, material part of the claim. | The difference is harmless rounding, naming variation, stale profile data, or uncertain identity matching. |
+| Not assessable | Unable to check | The source is inaccessible, confidential, too ambiguous, or cannot be reliably linked to the candidate. | Available evidence is enough for another assessment. |
+
+Use the internal assessment values in JSON. Use the plain labels in the human-facing PDF and conversation summary.
 
 ## Confidence
 
@@ -32,10 +34,10 @@ Never elevate search snippets, anonymous posts, writing-style impressions, AI-te
 
 ## Overall conclusion
 
-- No material issues found: no material inconsistency exists; unresolved claims may still remain.
-- Clarification recommended: one or more claims need focused follow-up, with no high-confidence material conflict.
-- Human review recommended: at least one material inconsistency exists, or the evidence is unusually complex or consequential.
-- Insufficient evidence: the substantive claims are mostly not assessable.
+- No material issues found -> **No important problems found**: no important mismatch exists; unresolved claims may still remain.
+- Clarification recommended -> **Some claims need an explanation**: one or more claims need focused follow-up, with no high-confidence conflict.
+- Human review recommended -> **Important mismatch - human review needed**: at least one important mismatch exists, or the evidence is unusually complex or consequential.
+- Insufficient evidence -> **Not enough information to review**: most substantive claims could not be checked.
 
 The overall conclusion is workflow routing, not a hiring outcome.
 

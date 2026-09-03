@@ -1,7 +1,7 @@
 interface:
   display_name: "Resume Claim Verification"
-  short_description: "Evidence-based resume claim review"
-  default_prompt: "Use $resume-claim-verification to review this resume claim by claim and produce a neutral PDF report."
+  short_description: "Clear, evidence-based resume checks"
+  default_prompt: "Use $resume-claim-verification to check this resume claim by claim and produce a plain-language PDF report."
 
 policy:
   allow_implicit_invocation: true

@@ -33,8 +33,8 @@ class ReportTests(unittest.TestCase):
     def test_standard_limitations_are_always_added(self) -> None:
         report = load_and_validate(FIXTURES / "consistent.json")
         joined = " ".join(report["limitations"])
-        self.assertIn("Missing public evidence is not evidence of deception.", joined)
-        self.assertIn("does not establish fraud", joined)
+        self.assertIn("Finding nothing online does not mean the claim is false.", joined)
+        self.assertIn("does not prove that anyone lied or committed fraud", joined)
 
     def test_prohibited_decision_field_is_rejected(self) -> None:
         raw = json.loads((FIXTURES / "consistent.json").read_text(encoding="utf-8"))
@@ -84,17 +84,25 @@ class ReportTests(unittest.TestCase):
             reader = PdfReader(output)
             text = "\n".join(page.extract_text() or "" for page in reader.pages)
             for heading in (
-                "Executive summary",
-                "What the review found",
-                "Claim assessment",
-                "Detailed findings",
+                "Summary",
+                "Results at a glance",
+                "Claim-by-claim review",
+                "Why each claim received this result",
                 "Sources",
-                "Limitations and required human review",
+                "What this report cannot tell you",
             ):
                 self.assertIn(heading, text)
-            self.assertIn("This report does not establish fraud", text)
-            self.assertIn("Unverified does not mean false", text)
-            self.assertIn("not a probability that the resume is deceptive", text)
+            self.assertIn("does not prove that anyone lied or committed fraud", text)
+            self.assertIn("Not enough evidence", text)
+            self.assertIn("Important details don't match", text)
+            self.assertIn("not a fake-resume score", text)
+            for technical_label in (
+                "Plausible but unverified",
+                "Needs clarification",
+                "Material inconsistency",
+                "Not assessable",
+            ):
+                self.assertNotIn(technical_label, text)
 
 
 if __name__ == "__main__":

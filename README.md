@@ -5,7 +5,7 @@
 
   ![Codex Plugin](https://img.shields.io/badge/Codex-Plugin-16324F?style=for-the-badge)
   ![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Plugin-246B9E?style=for-the-badge)
-  ![Version](https://img.shields.io/badge/version-0.2.0-27845A?style=for-the-badge)
+  ![Version](https://img.shields.io/badge/version-0.3.0-27845A?style=for-the-badge)
   ![Tests](https://img.shields.io/badge/tests-8%20passing-27845A?style=for-the-badge)
 
   **Review the evidence behind resume claims without turning uncertainty into an accusation.**
@@ -19,18 +19,18 @@
 
 A resume is a collection of claims, not a binary true-or-false document. Some claims have strong public evidence. Others involve confidential work, private employers, missing profiles, or ordinary date rounding.
 
-Resume Claim Verification reviews each claim independently and clearly separates:
+Resume Claim Verification checks each claim on its own and shows:
 
-| Result | Plain-language meaning |
-|---|---|
-| 🟢 **Supported** | Credible evidence agrees with the important parts of the claim. |
-| 🔵 **Unverified** | No material conflict was found, but independent proof is incomplete. |
-| 🟡 **Needs clarification** | A focused question could resolve unclear scope, dates, ownership, or metrics. |
-| 🔴 **Materially inconsistent** | Credible evidence directly conflicts with an important part of the claim. |
-| ⚪ **Not assessable** | The available material is private, confidential, ambiguous, or too limited. |
+| What you will see | What it means | What to do |
+|---|---|---|
+| 🟢 **Matches the evidence** | Reliable information matches the important parts of the claim. | No follow-up unless new information appears. |
+| 🔵 **Not enough evidence** | Nothing important conflicts, but there is not enough proof to confirm the claim. | Ask for a document, link, or work example if confirmation matters. |
+| 🟡 **Needs an explanation** | Part of the claim is unclear, such as dates, ownership, personal contribution, or results. | Ask the candidate the focused question in the report. |
+| 🔴 **Important details don't match** | Reliable information disagrees with an important part of the claim. | Have a person review the evidence and ask the candidate about it. |
+| ⚪ **Unable to check** | A meaningful check was not possible because the information is private, confidential, unavailable, or cannot be linked reliably. | Use a consent-based verification method if the claim must be checked. |
 
 > [!IMPORTANT]
-> **Unverified does not mean false.** The plugin never converts missing evidence into a deception finding.
+> **Not enough evidence does not mean false.** It only means the review could not find enough reliable information to confirm the claim.
 
 ## What it does
 
@@ -61,14 +61,14 @@ Resume + supplied evidence
 The first page explains every percentage with both a count and a definition:
 
 ```text
-34% Supported                1 of 3 claims
- 0% Unverified               0 of 3 claims
-33% Needs clarification      1 of 3 claims
-33% Materially inconsistent  1 of 3 claims
- 0% Not assessable           0 of 3 claims
+34% Matches the evidence            1 of 3 claims
+ 0% Not enough evidence             0 of 3 claims
+33% Needs an explanation            1 of 3 claims
+33% Important details don't match   1 of 3 claims
+ 0% Unable to check                 0 of 3 claims
 ```
 
-These percentages describe the **distribution of evidence outcomes**. They are never presented as an “X% fake” score.
+These percentages simply show **how many claims received each result**. They are never presented as an “X% fake” score.
 
 <div align="center">
   <a href="./plugins/resume-claim-verification/skills/resume-claim-verification/output/pdf/sample-resume-claim-verification-report.pdf">
@@ -147,8 +147,8 @@ The skill also requires:
 
 - Candidate consent for private employment, education, reference, or background checks
 - Clear separation between observed evidence and inference
-- Human review of every material inconsistency
-- Benign alternative explanations for unresolved or conflicting evidence
+- Human review whenever important details do not match
+- Other reasonable explanations whenever evidence is missing or conflicting
 - An explicit limitation that the report does not establish fraud
 
 ## Develop and test

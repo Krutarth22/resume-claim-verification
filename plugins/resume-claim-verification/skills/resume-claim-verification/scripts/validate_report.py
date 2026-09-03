@@ -81,10 +81,10 @@ PROHIBITED_CONCLUSION_PATTERNS = (
 )
 
 STANDARD_LIMITATIONS = [
-    "Missing public evidence is not evidence of deception.",
-    "Confidential or private work may not be independently verifiable.",
-    "Identity matching between records may be uncertain.",
-    "This report does not establish fraud and must not be used as an autonomous hiring decision.",
+    "Finding nothing online does not mean the claim is false.",
+    "Private or confidential work may be impossible to confirm from public sources.",
+    "A matching name or profile may belong to someone else.",
+    "This report does not prove that anyone lied or committed fraud. A person must make every hiring decision.",
 ]
 
 

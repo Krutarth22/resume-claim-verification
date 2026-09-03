@@ -2,6 +2,16 @@
 
 The PDF generator consumes UTF-8 JSON with this shape. Unknown fields are rejected so prohibited decision fields cannot silently enter the report.
 
+The JSON keeps stable internal assessment values for integrations. The PDF translates them into plain language:
+
+| JSON value | PDF label |
+|---|---|
+| `Supported` | Matches the evidence |
+| `Plausible but unverified` | Not enough evidence |
+| `Needs clarification` | Needs an explanation |
+| `Material inconsistency` | Important details don't match |
+| `Not assessable` | Unable to check |
+
 ```json
 {
   "report_version": "1.0",
@@ -66,9 +76,9 @@ Do not add fields representing `fake`, `fraud`, `score`, `risk_score`, `candidat
 
 The generator always appends these statements even if they are absent from the input:
 
-- Missing public evidence is not evidence of deception.
-- Confidential or private work may not be independently verifiable.
-- Identity matching between records may be uncertain.
-- This report does not establish fraud and must not be used as an autonomous hiring decision.
+- Finding nothing online does not mean the claim is false.
+- Private or confidential work may be impossible to confirm from public sources.
+- A matching name or profile may belong to someone else.
+- This report does not prove that anyone lied or committed fraud. A person must make every hiring decision.
 
-The validator derives `counts` and `percentages` from `claims`; they are not accepted as input. The PDF presents the percentages as a five-category evidence profile and never combines them into a single authenticity or deception score.
+The validator derives `counts` and `percentages` from `claims`; they are not accepted as input. The PDF presents the percentages as five plain-language results and never combines them into a single authenticity or deception score.

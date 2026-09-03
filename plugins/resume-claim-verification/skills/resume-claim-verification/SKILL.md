@@ -23,6 +23,7 @@ Assess claims, not people. The deliverable is an evidence dossier for human revi
 5. Record observations separately from inferences. For every conflict, include reasonable alternative explanations and a question that could resolve it.
 6. Apply the assessment and confidence rules in [references/assessment-rubric.md](references/assessment-rubric.md).
 7. Create a report JSON that conforms to [references/report-schema.md](references/report-schema.md).
+   Write every reader-facing sentence for a first-time reviewer. Use short, direct wording. Avoid technical terms such as `material`, `assessable`, `inference`, `corroborate`, and `attribution` unless you immediately explain them in ordinary language.
 8. Validate and generate the PDF:
 
    ```bash
@@ -31,16 +32,18 @@ Assess claims, not people. The deliverable is an evidence dossier for human revi
    ```
 
 9. Render every final PDF with `pdftoppm`, inspect every page, and fix clipping, overflow, unreadable tables, or broken links before delivery.
-10. Return a brief plain-text summary and the PDF. Generate normalized JSON only when the user requests an integration-ready secondary output.
+10. Return a brief plain-text summary and the PDF. Use the plain reader-facing labels defined in the rubric rather than technical assessment terms. Generate normalized JSON only when the user requests an integration-ready secondary output.
 
 ## Required report behavior
 
 - Use only these claim assessments: `Supported`, `Plausible but unverified`, `Needs clarification`, `Material inconsistency`, and `Not assessable`.
+- Keep those values in JSON for integrations, but translate them in the PDF and conversation: `Matches the evidence`, `Not enough evidence`, `Needs an explanation`, `Important details don't match`, and `Unable to check`.
 - Use only these overall conclusions: `No material issues found`, `Clarification recommended`, `Human review recommended`, and `Insufficient evidence`.
 - A `Material inconsistency` requires credible evidence that directly conflicts with a material claim. Weak signals, stylistic impressions, or absence of evidence never qualify.
 - Confidence describes confidence in the assessment, not confidence in the candidate's honesty.
-- Show the percentage of assessed claims in each assessment category as an evidence profile. Do not combine those percentages into an “X% fake,” deception-probability, authenticity, or candidate-risk score.
+- Show the percentage of assessed claims in each plain-language result. Explain the difference between `Not enough evidence` and `Unable to check`. Do not combine those percentages into an “X% fake,” deception-probability, authenticity, or candidate-risk score.
 - Cite a retrievable source or identify the supplied artifact for each supporting observation.
+- Make each result answer three questions: what was checked, what was found, and what the reviewer should do next.
 - Include the standard limitations and human-review disclaimer from the report schema.
 - Do not rank candidates, recommend hire/no-hire, infer intent, or use terms such as “fake resume” as a conclusion.
 

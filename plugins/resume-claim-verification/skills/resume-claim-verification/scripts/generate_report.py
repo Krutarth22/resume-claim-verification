@@ -45,19 +45,32 @@ STATUS_COLORS = {
 }
 
 STATUS_DISPLAY = {
-    "Supported": "Supported",
-    "Plausible but unverified": "Unverified",
-    "Needs clarification": "Needs clarification",
-    "Material inconsistency": "Materially inconsistent",
-    "Not assessable": "Not assessable",
+    "Supported": "Matches the evidence",
+    "Plausible but unverified": "Not enough evidence",
+    "Needs clarification": "Needs an explanation",
+    "Material inconsistency": "Important details don't match",
+    "Not assessable": "Unable to check",
 }
 
 STATUS_EXPLANATIONS = {
-    "Supported": "Credible evidence agrees with the important parts of the claim.",
-    "Plausible but unverified": "No material conflict was found, but independent proof is incomplete or unavailable.",
-    "Needs clarification": "A focused question could resolve unclear scope, dates, ownership, or metrics.",
-    "Material inconsistency": "Credible evidence directly conflicts with an important part of the claim.",
-    "Not assessable": "The available material is too limited, private, confidential, or ambiguous to evaluate.",
+    "Supported": "Reliable information matches the important parts of the claim. No follow-up is needed unless new information appears.",
+    "Plausible but unverified": "Nothing important conflicts, but there is not enough independent proof. Ask for a document, link, or work example if confirmation matters.",
+    "Needs clarification": "Part of the claim is unclear, such as the dates, personal contribution, ownership, or result. Ask the listed follow-up question.",
+    "Material inconsistency": "Reliable information disagrees with an important part of the claim. A person should review the evidence and ask the candidate about it.",
+    "Not assessable": "A meaningful check was not possible because the information is private, confidential, unavailable, or cannot be linked reliably to the candidate.",
+}
+
+OVERALL_DISPLAY = {
+    "No material issues found": "No important problems found",
+    "Clarification recommended": "Some claims need an explanation",
+    "Human review recommended": "Important mismatch - human review needed",
+    "Insufficient evidence": "Not enough information to review",
+}
+
+CONFIDENCE_DISPLAY = {
+    "High": "Strong",
+    "Medium": "Moderate",
+    "Low": "Limited",
 }
 
 
@@ -127,7 +140,7 @@ def page_decor(canvas: Any, doc: Any) -> None:
     canvas.line(doc.leftMargin, height - 0.42 * inch, width - doc.rightMargin, height - 0.42 * inch)
     canvas.setFont("Helvetica", 7.5)
     canvas.setFillColor(SLATE)
-    canvas.drawString(doc.leftMargin, 0.34 * inch, "Resume Claim Verification Report")
+    canvas.drawString(doc.leftMargin, 0.34 * inch, "Resume Evidence Review")
     canvas.drawRightString(width - doc.rightMargin, 0.34 * inch, f"Page {doc.page}")
     canvas.restoreState()
 
@@ -153,17 +166,17 @@ def generate_pdf(report: dict[str, Any], output_path: str | Path) -> Path:
     doc = SimpleDocTemplate(
         str(output), pagesize=letter, rightMargin=0.55 * inch, leftMargin=0.55 * inch,
         topMargin=0.58 * inch, bottomMargin=0.55 * inch,
-        title="Resume Claim Verification Report", author="Resume Claim Verification Skill",
+        title="Resume Evidence Review", author="Resume Claim Verification Skill",
     )
     story: list[Any] = []
 
-    story.append(Paragraph("Resume Claim Verification Report", styles["title"]))
+    story.append(Paragraph("Resume Evidence Review", styles["title"]))
     story.append(label_value("Candidate", report["candidate_label"], styles))
     story.append(label_value("Review date", report["review_date"], styles))
     story.append(label_value("Inputs reviewed", ", ".join(report["reviewed_inputs"]), styles))
     story.append(Spacer(1, 5))
     conclusion = Table(
-        [[Paragraph(esc(report["overall_conclusion"]), styles["callout"]) ]],
+        [[Paragraph(esc(OVERALL_DISPLAY[report["overall_conclusion"]]), styles["callout"]) ]],
         colWidths=[7.32 * inch],
     )
     conclusion.setStyle(TableStyle([
@@ -173,7 +186,7 @@ def generate_pdf(report: dict[str, Any], output_path: str | Path) -> Path:
         ("BOTTOMPADDING", (0, 0), (-1, -1), 9),
     ]))
     story.append(conclusion)
-    story.append(Paragraph("Executive summary", styles["h1"]))
+    story.append(Paragraph("Summary", styles["h1"]))
     story.append(paragraph(report["summary"], styles["body"]))
 
     count_order = [
@@ -181,16 +194,16 @@ def generate_pdf(report: dict[str, Any], output_path: str | Path) -> Path:
         "Material inconsistency", "Not assessable",
     ]
     total_claims = len(report["claims"])
-    story.append(Paragraph("What the review found", styles["h1"]))
+    story.append(Paragraph("Results at a glance", styles["h1"]))
     story.append(Paragraph(
         f"The report reviewed <b>{total_claims} claim{'s' if total_claims != 1 else ''}</b>. "
-        "Read the five results separately; they describe different evidence outcomes.",
+        "Each result below has a different meaning. A missing document is not the same as a mismatch.",
         styles["body"],
     ))
     profile_data = [[
-        Paragraph("Result", styles["table_header"]),
+        Paragraph("Plain result", styles["table_header"]),
         Paragraph("Share", styles["table_header"]),
-        Paragraph("What this means", styles["table_header"]),
+        Paragraph("What this means and what to do", styles["table_header"]),
     ]]
     for status in count_order:
         count = report["counts"][status]
@@ -220,7 +233,7 @@ def generate_pdf(report: dict[str, Any], output_path: str | Path) -> Path:
     story.append(profile_table)
     story.append(Spacer(1, 6))
     explanation_box = Table([[Paragraph(
-        "<b>Important:</b> Unverified does not mean false. Only “Materially inconsistent” means the review found credible evidence that directly conflicts with a claim. These percentages are not a probability that the resume is deceptive.",
+        "<b>Important:</b> “Not enough evidence” does not mean the claim is false. It means the review did not find enough reliable information to confirm it. Only “Important details don't match” means reliable information directly disagrees with a claim. These percentages are not a fake-resume score.",
         styles["body"],
     )]], colWidths=[7.32 * inch])
     explanation_box.setStyle(TableStyle([
@@ -233,20 +246,20 @@ def generate_pdf(report: dict[str, Any], output_path: str | Path) -> Path:
     ]))
     story.append(explanation_box)
 
-    story.append(Paragraph("Claim assessment", styles["h1"]))
+    story.append(Paragraph("Claim-by-claim review", styles["h1"]))
     table_data = [[
         Paragraph("ID", styles["table_header"]),
         Paragraph("Claim", styles["table_header"]),
-        Paragraph("Assessment", styles["table_header"]),
-        Paragraph("Confidence", styles["table_header"]),
-        Paragraph("Rationale", styles["table_header"]),
+        Paragraph("Result", styles["table_header"]),
+        Paragraph("How sure?", styles["table_header"]),
+        Paragraph("Why", styles["table_header"]),
     ]]
     for claim in report["claims"]:
         table_data.append([
             paragraph(claim["id"], styles["small"]),
             paragraph(claim["claim"], styles["small"]),
-            paragraph(claim["assessment"], styles["small"]),
-            paragraph(claim["confidence"], styles["small"]),
+            paragraph(STATUS_DISPLAY[claim["assessment"]], styles["small"]),
+            paragraph(CONFIDENCE_DISPLAY[claim["confidence"]], styles["small"]),
             paragraph(claim["inference"], styles["small"]),
         ])
     claim_table = Table(
@@ -272,40 +285,50 @@ def generate_pdf(report: dict[str, Any], output_path: str | Path) -> Path:
     story.append(claim_table)
 
     story.append(PageBreak())
-    story.append(Paragraph("Detailed findings", styles["h1"]))
+    story.append(Paragraph("Why each claim received this result", styles["h1"]))
     for claim in report["claims"]:
         block: list[Any] = [
             Paragraph(f"{esc(claim['id'])} - {esc(claim['category'])}", styles["h2"]),
             label_value("Claim", claim["claim"], styles),
-            label_value("Assessment", f"{claim['assessment']} ({claim['confidence']} confidence)", styles),
+            label_value(
+                "Result",
+                f"{STATUS_DISPLAY[claim['assessment']]} ({CONFIDENCE_DISPLAY[claim['confidence']]} confidence in this result)",
+                styles,
+            ),
         ]
-        block.append(Paragraph("Observed evidence", styles["h2"]))
+        block.append(Paragraph("What we found", styles["h2"]))
         if claim["observations"]:
             block.extend(bullet_paragraph(item, styles["body"]) for item in claim["observations"])
         else:
-            block.append(paragraph("No reliable observation was available.", styles["body"]))
+            block.append(paragraph("No reliable information was available to check this claim.", styles["body"]))
         for evidence in claim["evidence"]:
             source_text = f"{evidence['source']}: {evidence['finding']}"
             if evidence.get("url"):
                 source_text += f" ({evidence['url']})"
             block.append(bullet_paragraph(source_text, styles["small"]))
         block.extend([
-            label_value("Inference", claim["inference"], styles),
-            label_value("Recommended next step", claim["next_step"], styles),
+            label_value("What this suggests", claim["inference"], styles),
+            label_value("What to do next", claim["next_step"], styles),
         ])
         if claim["alternative_explanations"]:
-            block.append(Paragraph("Alternative explanations", styles["h2"]))
-            block.extend(
-                bullet_paragraph(item, styles["body"]) for item in claim["alternative_explanations"]
-            )
+            block.append(KeepTogether([
+                Paragraph("Other possible explanations", styles["h2"]),
+                *(
+                    bullet_paragraph(item, styles["body"])
+                    for item in claim["alternative_explanations"]
+                ),
+            ]))
         if claim["follow_up_questions"]:
-            block.append(Paragraph("Follow-up questions", styles["h2"]))
-            block.extend(
-                Paragraph(f"{index}. {esc(item)}", styles["body"])
-                for index, item in enumerate(claim["follow_up_questions"], start=1)
-            )
+            block.append(KeepTogether([
+                Paragraph("Follow-up questions", styles["h2"]),
+                *(
+                    Paragraph(f"{index}. {esc(item)}", styles["body"])
+                    for index, item in enumerate(claim["follow_up_questions"], start=1)
+                ),
+            ]))
         block.append(HRFlowable(width="100%", thickness=0.5, color=MID_GRAY, spaceBefore=7, spaceAfter=4))
-        story.append(KeepTogether(block))
+        story.append(KeepTogether(block[:3]))
+        story.extend(block[3:])
 
     story.append(Paragraph("Sources", styles["h1"]))
     if report["sources"]:
@@ -319,7 +342,7 @@ def generate_pdf(report: dict[str, Any], output_path: str | Path) -> Path:
     else:
         story.append(paragraph("No external sources were used.", styles["body"]))
 
-    story.append(Paragraph("Limitations and required human review", styles["h1"]))
+    story.append(Paragraph("What this report cannot tell you", styles["h1"]))
     story.extend(bullet_paragraph(item, styles["body"]) for item in report["limitations"])
 
     doc.build(story, onFirstPage=page_decor, onLaterPages=page_decor)

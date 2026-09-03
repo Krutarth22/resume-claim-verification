@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Evidence-aware tools for clear, responsible resume claim review.",
-    "version": "0.2.0"
+    "version": "0.3.0"
   },
   "plugins": [
     {
       "name": "resume-claim-verification",
       "source": "./plugins/resume-claim-verification",
       "description": "Review resume claims against available evidence and create a neutral, beginner-friendly PDF report for human review.",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "author": {
         "name": "Krutarth22",
         "url": "https://github.com/Krutarth22"

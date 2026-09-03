@@ -15,7 +15,7 @@
     <path d="m99 157 18 18 33-40" fill="none" stroke="#27845A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
   <text x="310" y="112" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="700">Resume Claim Verification</text>
-  <text x="310" y="157" fill="#DCEBF4" font-family="Arial, Helvetica, sans-serif" font-size="23">Evidence-first review for Claude and Codex</text>
+  <text x="310" y="157" fill="#DCEBF4" font-family="Arial, Helvetica, sans-serif" font-size="23">Clear resume checks for Claude and Codex</text>
   <text x="310" y="203" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="19">Assess claims. Explain uncertainty. Generate a clear PDF.</text>
   <g font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700">
     <rect x="310" y="238" width="142" height="40" rx="20" fill="#DDF2E4"/><text x="333" y="264" fill="#174B36">SUPPORTED</text>
@@ -23,5 +23,5 @@
     <rect x="628" y="238" width="188" height="40" rx="20" fill="#FFF0C7"/><text x="649" y="264" fill="#6F5613">CLARIFICATION</text>
     <rect x="830" y="238" width="194" height="40" rx="20" fill="#FADDDD"/><text x="850" y="264" fill="#762E2E">INCONSISTENCY</text>
   </g>
-  <text x="310" y="316" fill="#BFD8E7" font-family="Arial, Helvetica, sans-serif" font-size="16">No binary verdicts. No candidate scoring. Human review stays in control.</text>
+  <text x="310" y="316" fill="#BFD8E7" font-family="Arial, Helvetica, sans-serif" font-size="16">No fake score. Missing evidence is not proof. A person makes the final call.</text>
 </svg>
