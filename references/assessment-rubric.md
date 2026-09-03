@@ -41,7 +41,7 @@ The overall conclusion is workflow routing, not a hiring outcome.
 
 ## Percentage profile
 
-Calculate each assessment percentage as `claims in category / total claims`, rounded to the nearest whole percent. Present all five percentages together so unresolved claims are not mistaken for contradictory claims. The percentages describe the distribution of claim assessments only; they are not probabilities that the resume or candidate is deceptive.
+Calculate each assessment percentage as `claims in category / total claims`. Display whole percentages using the largest-remainder method so the five displayed values sum to 100%. Present all five percentages with raw counts and a plain-language definition so unresolved claims are not mistaken for contradictory claims. State directly that “Unverified does not mean false” and that only `Material inconsistency` represents a direct evidentiary conflict. The percentages describe the distribution of claim assessments only; they are not probabilities that the resume or candidate is deceptive.
 
 ## Required neutral framing
 

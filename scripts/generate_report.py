@@ -44,6 +44,22 @@ STATUS_COLORS = {
     "Not assessable": colors.HexColor("#E8E8EA"),
 }
 
+STATUS_DISPLAY = {
+    "Supported": "Supported",
+    "Plausible but unverified": "Unverified",
+    "Needs clarification": "Needs clarification",
+    "Material inconsistency": "Materially inconsistent",
+    "Not assessable": "Not assessable",
+}
+
+STATUS_EXPLANATIONS = {
+    "Supported": "Credible evidence agrees with the important parts of the claim.",
+    "Plausible but unverified": "No material conflict was found, but independent proof is incomplete or unavailable.",
+    "Needs clarification": "A focused question could resolve unclear scope, dates, ownership, or metrics.",
+    "Material inconsistency": "Credible evidence directly conflicts with an important part of the claim.",
+    "Not assessable": "The available material is too limited, private, confidential, or ambiguous to evaluate.",
+}
+
 
 def esc(value: Any) -> str:
     return html.escape(str(value), quote=True)
@@ -164,30 +180,58 @@ def generate_pdf(report: dict[str, Any], output_path: str | Path) -> Path:
         "Supported", "Plausible but unverified", "Needs clarification",
         "Material inconsistency", "Not assessable",
     ]
-    count_data = [[Paragraph(esc(status), styles["table_header"]) for status in count_order]]
-    count_data.append([
-        Paragraph(
-            f"{report['counts'][status]} claim(s)<br/><font size='8'>{report['percentages'][status]}%</font>",
-            styles["callout"],
-        )
-        for status in count_order
-    ])
-    counts_table = Table(count_data, colWidths=[1.464 * inch] * 5)
-    counts_table.setStyle(TableStyle([
+    total_claims = len(report["claims"])
+    story.append(Paragraph("What the review found", styles["h1"]))
+    story.append(Paragraph(
+        f"The report reviewed <b>{total_claims} claim{'s' if total_claims != 1 else ''}</b>. "
+        "Read the five results separately; they describe different evidence outcomes.",
+        styles["body"],
+    ))
+    profile_data = [[
+        Paragraph("Result", styles["table_header"]),
+        Paragraph("Share", styles["table_header"]),
+        Paragraph("What this means", styles["table_header"]),
+    ]]
+    for status in count_order:
+        count = report["counts"][status]
+        profile_data.append([
+            Paragraph(esc(STATUS_DISPLAY[status]), styles["small"]),
+            Paragraph(
+                f"<b>{report['percentages'][status]}%</b><br/>{count} of {total_claims}",
+                styles["small"],
+            ),
+            Paragraph(esc(STATUS_EXPLANATIONS[status]), styles["small"]),
+        ])
+    profile_table = Table(profile_data, colWidths=[1.55 * inch, 0.85 * inch, 4.92 * inch], repeatRows=1)
+    profile_style = [
         ("BACKGROUND", (0, 0), (-1, 0), NAVY),
-        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-        ("ALIGN", (0, 0), (-1, -1), "CENTER"),
         ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
         ("GRID", (0, 0), (-1, -1), 0.4, MID_GRAY),
-        ("TOPPADDING", (0, 0), (-1, -1), 6),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+        ("TOPPADDING", (0, 0), (-1, -1), 5),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+        ("LEFTPADDING", (0, 0), (-1, -1), 5),
+        ("RIGHTPADDING", (0, 0), (-1, -1), 5),
+    ]
+    for row, status in enumerate(count_order, start=1):
+        profile_style.append(("BACKGROUND", (0, row), (0, row), STATUS_COLORS[status]))
+        if row % 2 == 0:
+            profile_style.append(("BACKGROUND", (1, row), (-1, row), LIGHT_GRAY))
+    profile_table.setStyle(TableStyle(profile_style))
+    story.append(profile_table)
+    story.append(Spacer(1, 6))
+    explanation_box = Table([[Paragraph(
+        "<b>Important:</b> Unverified does not mean false. Only “Materially inconsistent” means the review found credible evidence that directly conflicts with a claim. These percentages are not a probability that the resume is deceptive.",
+        styles["body"],
+    )]], colWidths=[7.32 * inch])
+    explanation_box.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#FFF8E6")),
+        ("BOX", (0, 0), (-1, -1), 0.6, colors.HexColor("#D9A521")),
+        ("TOPPADDING", (0, 0), (-1, -1), 7),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 7),
+        ("LEFTPADDING", (0, 0), (-1, -1), 8),
+        ("RIGHTPADDING", (0, 0), (-1, -1), 8),
     ]))
-    story.append(Spacer(1, 5))
-    story.append(counts_table)
-    story.append(Paragraph(
-        "Percentages describe the distribution of claim assessments, not the probability that a resume is deceptive.",
-        styles["subtitle"],
-    ))
+    story.append(explanation_box)
 
     story.append(Paragraph("Claim assessment", styles["h1"]))
     table_data = [[

@@ -2,7 +2,7 @@
 
 A portable Agent Skill for Claude and Codex that reviews resume claims individually and produces a neutral, evidence-based PDF report for human review.
 
-It does **not** label a resume or candidate as fake, rank candidates, infer intent, or make hiring recommendations. Missing online evidence is never treated as proof of deception. Reports show a five-category percentage profile rather than a misleading single “fake percentage.”
+It does **not** label a resume or candidate as fake, rank candidates, infer intent, or make hiring recommendations. Missing online evidence is never treated as proof of deception. Reports show a beginner-friendly five-category percentage profile with raw counts and plain-language definitions rather than a misleading single “fake percentage.”
 
 ## Install
 

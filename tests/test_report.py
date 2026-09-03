@@ -85,6 +85,7 @@ class ReportTests(unittest.TestCase):
             text = "\n".join(page.extract_text() or "" for page in reader.pages)
             for heading in (
                 "Executive summary",
+                "What the review found",
                 "Claim assessment",
                 "Detailed findings",
                 "Sources",
@@ -92,7 +93,8 @@ class ReportTests(unittest.TestCase):
             ):
                 self.assertIn(heading, text)
             self.assertIn("This report does not establish fraud", text)
-            self.assertIn("not the probability that a resume is deceptive", text)
+            self.assertIn("Unverified does not mean false", text)
+            self.assertIn("not a probability that the resume is deceptive", text)
 
 
 if __name__ == "__main__":
