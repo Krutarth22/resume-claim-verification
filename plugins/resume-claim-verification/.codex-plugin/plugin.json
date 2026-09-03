@@ -1,6 +1,6 @@
 {
   "name": "resume-claim-verification",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Review resume claims against available evidence and create a neutral, beginner-friendly PDF report for human review.",
   "author": {
     "name": "Krutarth22",

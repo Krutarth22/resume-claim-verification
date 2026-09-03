@@ -4,8 +4,8 @@
   <br />
 
   ![Codex Plugin](https://img.shields.io/badge/Codex-Plugin-16324F?style=for-the-badge)
-  ![Claude Skill](https://img.shields.io/badge/Claude-Agent%20Skill-246B9E?style=for-the-badge)
-  ![Version](https://img.shields.io/badge/version-0.1.0-27845A?style=for-the-badge)
+  ![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Plugin-246B9E?style=for-the-badge)
+  ![Version](https://img.shields.io/badge/version-0.2.0-27845A?style=for-the-badge)
   ![Tests](https://img.shields.io/badge/tests-8%20passing-27845A?style=for-the-badge)
 
   **Review the evidence behind resume claims without turning uncertainty into an accusation.**
@@ -80,6 +80,22 @@ These percentages describe the **distribution of evidence outcomes**. They are n
 
 ## Install
 
+### Claude Code plugin
+
+Add this GitHub repository as a Claude Code marketplace, then install the plugin:
+
+```text
+/plugin marketplace add Krutarth22/resume-claim-verification
+/plugin install resume-claim-verification@krutarth22
+/reload-plugins
+```
+
+Run those commands inside Claude Code. The plugin skill is available as:
+
+```text
+/resume-claim-verification:resume-claim-verification
+```
+
 ### Codex plugin
 
 Add this GitHub repository as a Codex marketplace, then install the plugin:
@@ -91,9 +107,9 @@ codex plugin add resume-claim-verification@krutarth22
 
 Start a new Codex task after installation so the new skill is discovered.
 
-### Standalone Claude or Codex skill
+### Standalone skill
 
-Clone the repository, then copy the bundled skill directory:
+If you prefer not to use either plugin marketplace, clone the repository and copy the shared skill directory directly:
 
 ```bash
 git clone https://github.com/Krutarth22/resume-claim-verification.git
